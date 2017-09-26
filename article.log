@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.2.23)  26 SEP 2017 13:17
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.2.23)  26 SEP 2017 14:56
 entering extended mode
 **article.tex
 (C:\Users\ohadben\Documents\GitHub\ISF-Grant\article.tex
@@ -102,32 +102,37 @@ LaTeX Font Info:    ... okay on input line 10.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
 LaTeX Font Info:    ... okay on input line 10.
 
+Overfull \hbox (14.27846pt too wide) in paragraph at lines 22--24
+[]\OT1/cmr/m/n/10 Current in-dus-try pro-jec-tions in-di-cate that non-volatile
+ main mem-ory (NVRAM)
+ []
+
+[1
+
+{C:/Users/ohadben/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 (C:\Users\ohadben\Documents\GitHub\ISF-Grant\article.bbl
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) [1
-
-{C:/Users/ohadben/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-(C:\Users\ohadben\Documents\GitHub\ISF-Grant\article.aux) ) 
+) [2] (C:\Users\ohadben\Documents\GitHub\ISF-Grant\article.aux) ) 
 Here is how much of TeX's memory you used:
- 841 strings out of 493921
- 9603 string characters out of 3147276
- 59028 words of memory out of 3000000
- 4187 multiletter control sequences out of 15000+200000
+ 842 strings out of 493921
+ 9609 string characters out of 3147276
+ 64028 words of memory out of 3000000
+ 4188 multiletter control sequences out of 15000+200000
  8561 words of font info for 31 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,4n,20p,203b,187s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9
-/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
-pe1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publi
-c/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
-s/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9
-.pfb>
-Output written on article.pdf (1 page, 53363 bytes).
+ 27i,4n,20p,1056b,187s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Program Files/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmr9.pfb>
+Output written on article.pdf (2 pages, 70866 bytes).
 PDF statistics:
- 30 PDF objects out of 1000 (max. 8388607)
+ 33 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
