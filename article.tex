@@ -25,6 +25,11 @@ Traditional log-based recovery techniques, although can be applied correctly in 
 The study of shared data structures and concurrent programming dates back over a half century ago. 1965 Dijkstra's pioneering work presented the concept of concurrent programming [*], followed by a series of seminal papers on inter-process communication, wait-free synchronization, and linearizability [*].
 Recent research has paid close attention to asynchronous models, in which there is no bound on the amount of time a process takes to transition to its next step, or to complete a memory operation. This assumption captures the behavior of most modern memory hierarchies, where different media (e.g., L1 cache vs. L2 cache vs. main memory) incur vastly different and often unpredictable access latencies, as well as the effect of the operating system (e.g., via preemption and interrupts) on the liveness of processes. In addition, asynchrony is also related to reliability in a precise way: algorithms that provide non-blocking progress properties (e.g., lock-freedom and wait-freedom) in an asynchronous environment with reliable processes continue to provide the same progress properties if crash failures are introduced. Informally speaking, this property holds because a process that crashes permanently at an arbitrary point in the execution of its algorithm is indistinguishable to the other processes from one that is merely very slow.
 
+\subsection{Correctness and Progress properties}
+Correctness property specifies the requirments for an implementation to be considerd correct. Linearizability, presented by Wang and Herliry [*], is the most common correctness property in use for shared memory objects. Roughtly speaking, linearizability requires that operations on objects appear to take effect instantaneously in some serial order, while preserving the happens before relation, i.e., if op1 ends before op2 begins, then op1 should precede op2 in the serial order. Linearizability has no notion of an aborted or failed operation, and requires that a process finish one operation before it invokes the next. The criteria according to which implementations that support recovered processes are correct remain unclear.
+
+
+
 
 \bibliographystyle{abbrv}
 \bibliography{references}
