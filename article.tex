@@ -1,7 +1,8 @@
 \documentclass{article}
 
 \usepackage{amsmath}
-
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 
 %opening
 \title{ISF Grant}
@@ -37,11 +38,49 @@ Berryhill et al. have proposed an alternative, recoverable linearizability [*], 
 Izraelevitz et al. considered a real-world failure model, in which processes are assumed to fail together, as part of a full-system crash. Under this model, persistent atomicity and recoverable linearizability are indistinguishable (and thus local). The term durable linearizability was used to refer to this merged safety condition under the restricted failure model.
 
 \subsubsection{Recoverable response}
-All the correctness properties discussed above focused on keeping the object or data structure consist in case of a failures. However, none of which address the problem of the returned value by the failed operation. Consider for example a write operation. As the operation is atomic, it obviously satisfies strict linearizability - either the write took effect before the crash failure, or that it did not. However, once the process is recovered it has no knowledge which of the two is the case, since the acknowledgement returned by the write is saved to the local memory of the process (part of the cache), which is lost due to the failure. Assuming the process is in a middle of executing a bigger operation which it desired to complete once it is recovered, it must know whether the write took effect (in which case it can continue and execute the rest of the code), or that it did not (in which case it needs to rewrite). Skipping the write is not an option, as it might cause an undesired behaviour which in turn might violate the requirements of the object.
+All the correctness properties discussed above focused on keeping the object or the data structure consist in case of a failures. However, none of which address the problem of the returned value by the failed operation. Consider for example a write operation. Since write is atomic it obviously satisfies strict linearizability - either the write took effect before the crash failure, or that it did not. However, once the process is recovered it has no knowledge which of the two is the case, since the acknowledgement returned by the write is saved to the local memory of the process (a part of the cache), which is lost due to the failure. Assuming the process is in a middle of executing an operation which it desired to complete once it is recovered, it must know whether the write took effect (in which case it can continue and execute the code), or that it did not (in which case it needs to rewrite). Skipping the write is not an option, as it might cause an undesired behaviour, which in turn might violate the requirements of the object.
 
-For this case, we present a different approach called Recoverable response linearizability (RR-linearizability) (good term????). In case of a failure, once the process is recovered it is "aware" of the failure, in the sense that it runs a designated recovery code. In a sense, this recovery code "extends" the interval of the interrupted operation. We require that the pending operation linearizes between it's invocation and the end of the recovery code, or aborts. In addition, in case of linearization, the returned value of the operation is known to the process. Notice that this definition introduce a relaxation which is not intuitive neither trivial - in case that a process operation is complete before the crash, but the response of it is lost due to the cache's lost, we allow the process, upon recovering, extending the interval of that operation using the recovery code (even though the operation was complete), such that at the end of it the process knows the returned value or aborts. This gives the process the flexibility to move the linearization point to after the crash, if needed. In addition, although the definition allows a process to abort the interrupted operation, it is equivalent to a definition in which a process must complete the operation - once a process knows the operation is aborted, it can reissue it.
+For this case, we present a different approach called recoverable response linearizability (RR-linearizability) (good term????). In case of a failure, once the process is recovered it is "aware" of the failure, in the sense that it runs a designated recovery code. In a sense, this recovery code "extends" the interval of the interrupted operation. We require that the pending operation linearizes between it's invocation and the end of the recovery code, or aborts. In addition, in case of linearization, the returned value of the operation is known to the process. Notice that this definition introduce a relaxation which is not intuitive neither trivial - in case that a process operation is complete before the crash, but the response of it is lost due to the cache's lost, we allow the process, upon recovering, extending the interval of that operation using the recovery code (even though the operation was complete), such that at the end of it the process knows the returned value or aborts. This gives the process the flexibility to move the linearization point to after the crash, if needed. In addition, although the definition allows a process to abort the interrupted operation, it is equivalent to a definition in which a process must complete the operation - once a process knows the operation is aborted, it can reissue it.
 
-RR-linearizability does not specify the progress property required from the implementation. One can always use a recoverable mutual exclusion lock at the recovery code in order to sequentially let the processes complete their pending operations. Obviously, this solution is not desired when the operation implementation we are recovering is wait-free. In this case, we would like the recovery code to be wait-free as well, meaning that a process finish it in a finite number of its own steps in the absence of failure. One more point that requires our attention is the possibility of a failure along the recovery code. Would it be realistic to assume that such a scenario will not happen? Of course, a recovery code that can suffer itself failures is better. However, this is not well defined. If we allow each failure to run new and different recovery code, we can always use nesting technique. A better approach will be such that in the case of failure inside of a recovery code, restarting the recovery code from the beginning is enough. In such case, if the recovery code is wait-free in the absence of a failure, we can guarantee that no matter how many failures the process experienced, if given enough time with no failure, it will finish the recovery code (and therefore the pending operation) in a wait-free manner.
+RR-linearizability does not specify the progress property required from the implementation. One can always use a recoverable mutual exclusion lock at the recovery code in order to sequentially let the processes complete their pending operations. Obviously, this solution is not desired when the operation implementation we are recovering is wait-free. In this case, we would like the recovery code to be wait-free as well, meaning that a process finish it in a finite number of its own steps in the absence of failure. One more point that requires our attention is the possibility of a failure along the recovery code. Would it be realistic to assume that such a scenario will not happen? Of course, a recovery code that can suffer itself failures is better. However, this is not well defined. If we allow each failure to run new and different recovery code, we can use a nesting technique in a way which increase the running time with each failure. A better approach will be such that in the case of failure inside of a recovery code, restarting the recovery code, from the beginning any other point, is enough. In such case, if the recovery code is wait-free in the absence of a failure, we can guarantee that no matter how many failures the process experienced, once given enough time with no failure, it will finish the recovery code (and therefore the pending operation) in a wait-free manner.
+
+\subsubsection*{Recoverable primitives}
+
+The correctness properties variants discussed earlier do not need to consider primitives, as any atomic operation satisfies any of the properties. Unlike it, RR-linearizability is not satisfies by primitives since the respond of the primitive is lost in case of a failure. Therefore, there is a need to supply each primitive with an implementation as well as a recovery code. In the following section we do so for well known primitives, as well as proving impossibility result for others. We assume a failure model of a full-system crash, and address the wait-free progress property.
+The fact that RR-linearizabilty allows us to swift the linearization point of an operation to after the crash is used for the recover after a primitive failure.
+
+\paragraph*{Read}
+
+The process will simply reread the variable upon its recovering. Since read does not affect the rest of the processes, this can be seen as aborting the read preceding the crash, and reissue it.
+
+\paragraph*{Write}
+Write instruction is "wrap" with code such that in case of a failure the extra data will be used for recovering. For an instruction writing value $x$ to variable $R$ by process $p$, we provide the following implementation. We use the convention of capital letters names for shared memory variables, and small letters for local ones. In the following code, $R_p$ is a variable in the memory designated for process $p$.
+
+\begin{algorithm}
+	\caption{Write}\label{euclid}
+	\begin{algorithmic}[1]
+		\Procedure{write operation}{}
+		\State $res \gets R$
+		\State $R_{p} \gets res$
+		\State $R \gets x$
+		\EndProcedure
+		
+		\Procedure{recovery code}{}
+		\If {$R_{p} == R$} \Return abort
+		\EndIf
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+For simplicity, we write the recovery code as a single instruction, although it needs to be written as several instructions, as it access two different locations at the memory. Since $R_p$ is accessed by $p$ only, the point where $p$ reads $R$ determine the outcome of the recovery code. Moreover, in case of a failure at the recovery code, upon recovering the process will execute the recovery code again.
+
+In case of a failure before line 4, the process will abort upon recovering (and reissue the write operation). In case of a failure at line 4, the process will execute the recovery code. Assuming the if statement at the recovery code does hold, then no process, including $p$, wrote to $R$ after the read of $p$ at line 2, and thus the write operation is aborted and needs to be reissued. Otherwise, there must be a process to write to $R$ after the read at line 2. In case $p$ write at line 4 took affect before the crash  we linearize it at the point of the write. Otherwise there must be a process $q \neq p$ such that $p$ wrote to $R$ in between the two reads of $p$, and we linearize the write of $p$ just before $q$'s write. Notice that the write of $q$ covers the write of $p$, and therefore other processes can not distinguish the new execution with the linearized write from the run with no write by $p$.
+
+The above analysis ignores the ABA problem - it might be that $p$ reads the value from $R$, even though there was a write to $R$ in between the two different reads. To overcome this problem, we can augment any value written with the writing process's id, and a sequential number (each process will have its own sequential number). This way, reading the same value guarantee that no write to $R$ took place between the two different reads.
+
+
+
+
 
 
 \bibliographystyle{abbrv}
