@@ -46,12 +46,12 @@ RR-linearizability does not specify the progress property required from the impl
 
 \subsubsection*{Recoverable primitives}
 
-The correctness properties variants discussed earlier do not need to consider primitives, as any atomic operation satisfies any of the properties. Unlike it, RR-linearizability is not satisfies by primitives since the respond of the primitive is lost in case of a failure. Therefore, there is a need to supply each primitive with an implementation as well as a recovery code. In the following section we do so for well known primitives, as well as proving impossibility result for others. We assume a failure model of a full-system crash, and address the wait-free progress property.
+The correctness properties variants discussed earlier does not need to consider primitives, as any atomic operation satisfies any of the properties. Unlike it, RR-linearizability is not satisfies by primitives since the respond of the primitive is lost in case of a failure. Therefore, there is a need to supply each primitive with an implementation as well as a recovery code. In the following section we do so for well known primitives, as well as presenting impossibility result for others. We assume a failure model of a full-system crash, and address the wait-free progress property.
 The fact that RR-linearizabilty allows us to swift the linearization point of an operation to after the crash is used for the recover after a primitive failure.
 
 \paragraph*{Read}
 
-The process will simply reread the variable upon its recovering. Since read does not affect the rest of the processes, this can be seen as aborting the read preceding the crash, and reissue it.
+The process simply abort the read upon its recovering. Since read does not affect the rest of the processes, this can be done safely.
 
 \paragraph*{Write}
 Write instruction is "wrap" with code such that in case of a failure the extra data will be used for recovering. For an instruction writing value $x$ to variable $R$ by process $p$, we provide the following implementation. We use the convention of capital letters names for shared memory variables, and small letters for local ones. In the following code, $R_p$ is a variable in the memory designated for process $p$.
@@ -72,14 +72,19 @@ Write instruction is "wrap" with code such that in case of a failure the extra d
 	\end{algorithmic}
 \end{algorithm}
 
-For simplicity, we write the recovery code as a single instruction, although it needs to be written as several instructions, as it access two different locations at the memory. Since $R_p$ is accessed by $p$ only, the point where $p$ reads $R$ determine the outcome of the recovery code. Moreover, in case of a failure at the recovery code, upon recovering the process will execute the recovery code again.
+For simplicity, we write the recovery code as a single instruction, although it needs to be written as several instructions, as it access two different locations in the memory. Since $R_p$ is accessed by $p$ only, the point where $p$ reads $R$ determine the outcome of the recovery code. Moreover, since the recovery code contains only reads, and we already know how to recover reads, the recovery code itself is recoverable.
 
-In case of a failure before line 4, the process will abort upon recovering (and reissue the write operation). In case of a failure at line 4, the process will execute the recovery code. Assuming the if statement at the recovery code does hold, then no process, including $p$, wrote to $R$ after the read of $p$ at line 2, and thus the write operation is aborted and needs to be reissued. Otherwise, there must be a process to write to $R$ after the read at line 2. In case $p$ write at line 4 took affect before the crash  we linearize it at the point of the write. Otherwise there must be a process $q \neq p$ such that $p$ wrote to $R$ in between the two reads of $p$, and we linearize the write of $p$ just before $q$'s write. Notice that the write of $q$ covers the write of $p$, and therefore other processes can not distinguish the new execution with the linearized write from the run with no write by $p$.
+The intuition for the correctness of the code is that if there was a write to $R$ between the two reads of $p$ (at line 2, and at the recovery code), then either this write is by $p$, and we can linearize it at the point where it took affect, or that there was a write by some other process, and we can linearize the write of $p$ just before it, such that we overwrite it, and the rest of the processes can not distinguish between the two situations. Therefore, in case of a failure before line 4, $p$ will simply abort upon recovering, and in case of a failure at line 4, $p$ will execute the recovery code.
 
 The above analysis ignores the ABA problem - it might be that $p$ reads the value from $R$, even though there was a write to $R$ in between the two different reads. To overcome this problem, we can augment any value written with the writing process's id, and a sequential number (each process will have its own sequential number). This way, reading the same value guarantee that no write to $R$ took place between the two different reads.
 
 
+\paragraph*{Test-and-Set}
+We now show that there is no wait-free RR-linearizability implementation for TAS for two processes, assuming the system supply only read/write and TAS primitives. We give a high level description for the proof.
 
+Assume by contradiction that there is such an implementation. Denote the set of processes by $P=\{p,q\}$. First, notice that the code implementing the TAS operation must contain a TAS object $O_1$ which accessed by the two processes and determine their output, otherwise we can solve consensus for two processes using reads and writes only, contradicting to FLP result [*]. We let both processes run to the point where they both about to access $O_1$, and then perform a TAS one after the other, followed by a crash of $p$ only.
+
+Once $p$ is recover, it needs to execute a recovery code, since the value returned from $O_1$ is lost. We look at a solo run of $p$ starting from this point, and consider the possible return values. If $p$ returns 1, then we look at the execution where $q$ was the first to access $O_1$ before the crash. If $p$ returns 0 or abort, we look at the execution where $q$ is the second to access $O_1$. Notice that after the crash, $p$ is not able to distinguish between the different executions, thus it performs the same run after any of these. TAS can be seen as a consensus for two processes, the one that returns 1 wins. In any case we get a bivalet configuration - both processes want to return the same value (we consider abort as 0), while only one can return 1, while the other must return 0. Thus, it must be that both processes access another TAS object $O_2$. We can continue and use the same argument, constructing an execution where more and more different TAS objects are accessed.
 
 
 
