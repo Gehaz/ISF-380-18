@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.2.23)  1 OCT 2017 18:32
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.2.23)  2 OCT 2017 16:58
 entering extended mode
 **article.tex
 (C:\Users\ohadben\Documents\GitHub\ISF-380-18\article.tex
@@ -154,40 +154,41 @@ Missing character: There is no Ã in font cmr10!
 Missing character: There is no ¸ in font cmr10!
 
 [2] [3] [4]
-Overfull \hbox (15.5273pt too wide) in paragraph at lines 83--84
+Overfull \hbox (15.5273pt too wide) in paragraph at lines 86--87
 \OT1/cmr/m/n/10 ple-men-ta-tion for TAS for two pro-cesses, as-sum-ing the sys-
 tem sup-ply only read/write
  []
 
-(C:\Users\ohadben\Documents\GitHub\ISF-380-18\article.bbl
+[5] (C:\Users\ohadben\Documents\GitHub\ISF-380-18\article.bbl
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) [5] [6] (C:\Users\ohadben\Documents\GitHub\ISF-380-18\article.aux) ) 
+) [6] (C:\Users\ohadben\Documents\GitHub\ISF-380-18\article.aux) ) 
 Here is how much of TeX's memory you used:
- 1462 strings out of 493921
- 18434 string characters out of 3147276
+ 1464 strings out of 493921
+ 18455 string characters out of 3147276
  74962 words of memory out of 3000000
- 4788 multiletter control sequences out of 15000+200000
- 9931 words of font info for 36 fonts, out of 3000000 for 9000
+ 4789 multiletter control sequences out of 15000+200000
+ 10277 words of font info for 37 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 27i,4n,20p,1413b,274s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 
-2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Program Files/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmsy10.pfb>
-Output written on article.pdf (6 pages, 153385 bytes).
+ 27i,4n,20p,1406b,272s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program F
+iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmcsc10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+r10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmti10.pfb>
+Output written on article.pdf (6 pages, 166393 bytes).
 PDF statistics:
- 73 PDF objects out of 1000 (max. 8388607)
+ 77 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
