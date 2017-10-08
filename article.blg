@@ -1,5 +1,19 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: article.aux
-The style file: abbrv.bst
-I found no \citation commands---while reading file article.aux
+The style file: plain.bst
 Database file #1: references.bib
-(There was 1 error message)
+A bad cross reference---entry "DBLP:conf/icdcs/GuerraouiL04"
+refers to entry "DBLP:conf/icdcs/2004", which doesn't exist
+A bad cross reference---entry "DBLP:conf/opodis/BerryhillGT15"
+refers to entry "DBLP:conf/opodis/2015", which doesn't exist
+A bad cross reference---entry "DBLP:conf/wdag/IzraelevitzMS16"
+refers to entry "DBLP:conf/wdag/2016", which doesn't exist
+A bad cross reference---entry "DBLP:conf/podc/GolabR16"
+refers to entry "DBLP:conf/podc/2016", which doesn't exist
+A bad cross reference---entry "DBLP:conf/podc/GolabH17"
+refers to entry "DBLP:conf/podc/2017", which doesn't exist
+Warning--I didn't find a database entry for "DBLP:conf/icdcs/2004"
+Warning--I didn't find a database entry for "DBLP:conf/opodis/2015"
+Warning--I didn't find a database entry for "DBLP:conf/wdag/2016"
+Warning--I didn't find a database entry for "DBLP:conf/podc/2016"
+Warning--I didn't find a database entry for "DBLP:conf/podc/2017"
+(There were 5 error messages)
