@@ -86,6 +86,39 @@ The intuition for the correctness of the code is that if there was a write to $R
 The above analysis ignores the ABA problem - it might be that $p$ reads the value from $R$, even though there was a write to $R$ in between the two different reads. To overcome this problem, we can augment any value written with the writing process's id, and a sequential number (each process will have its own sequential number). This way, reading the same value guarantee that no write to $R$ took place between the two different reads.
 
 
+\paragraph*{Compare-and-Swap}
+
+Compare-and-Swap (CAS)...
+
+\begin{algorithm}
+	\caption{Compare-and-Swap}\label{euclid}
+	\begin{algorithmic}[1]
+		\Procedure{cas operation}{}
+		\State $<id,val> \gets C$
+		\If {$val \neq old$}
+		\State \Return false
+		\EndIf
+		\State $S[i] \gets <id,val>$
+		\State $res \gets C.cas(<id,val>, <i,new>)$
+		\If {$res = true$}
+		\State $R[id][i] \gets val$
+		\EndIf
+		\State $S[i] \gets null$
+		\EndProcedure
+		
+		\Procedure{recovery code}{}
+		\State Read C, S[], R[i][]
+		\If {$<id,val>$ appears in C or S[], or $val$ appears in R[i][]}
+		\State \Return true
+		\Else {}
+		\State \Return false
+		\EndIf
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+
+
 \paragraph*{Test-and-Set}
 
 Test-and-Set (TAS) is a known object supported as a primitive in many modern architectures. A TAS object contains a binary value initialized to 0, and support a single atomic operation TAS which set the value of the object to 1 and returns the old value.
